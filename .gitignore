@@ -3,3 +3,12 @@
 ################################################################################
 
 /BasicEngineSFML/BasicEngineSFML/Debug
+/BasicEngineSFML/BasicEngineSFML/x64
+/BasicEngineSFML/BasicEngineSFML/BasicEngineSFML.vcxproj
+*.filters
+/BasicEngineSFML/.vs/BasicEngineSFML/v14
+/BasicEngineSFML/Debug
+/BasicEngineSFML/x64
+/BasicEngineSFML/BasicEngineSFML.VC.VC.opendb
+/BasicEngineSFML/BasicEngineSFML.VC.db
+/BasicEngineSFML/BasicEngineSFML.sln
