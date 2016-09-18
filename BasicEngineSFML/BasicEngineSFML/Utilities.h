@@ -1,19 +1,18 @@
 /*
-* Created: 07/11/2016
-*
 * Contains a number of general utilities for the application, such as specific math functions
 *   or exceptions.
-*
 */
 #pragma once
 #include <exception>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-/* Handles basic exceptions, with custom text */
+/* 
+ * Handles basic game exceptions
+ */
 class GameException : public std::exception
 {
 public:
-	enum ExceptionType { /* Refers to the type and severity of the error. Handling will vary accordingly */
+	enum ExceptionType {
 		DEBUG = 0,
 		INFO = 1,
 		WARNING = 2,

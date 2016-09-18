@@ -3,21 +3,6 @@
 * The Engine class contains managers for resources and States, and runs the primary 
 *  application loop in which logic updates, event handling and graphics rendering are 
 *  handled for existing States. 
-*
-* @How to Use
-* Required interaction with the Engine class is limited to instantiation with proper 
-*  parameters, as well as calling the run() function in order to begin the primary 
-*  application loop. Application specific processes are handled within States. 
-*
-* @What Does This Do?
-* 1. Loop until the window closes, and for the top State in the manager
-*   a. Update logic
-*   b. Handle event
-*   c. Draw
-* 2. Instantiate a resource manager
-* 3. Instantiate a state manager
-* 4. Set and update application properties
-*   -Frame rate, anti-aliasing, window size, fullscreen, etc...
 */
 #pragma once
 #include <SFML\Graphics.hpp> 
@@ -31,7 +16,7 @@ class Engine {
 public:
 	/*
 	* @Description
-	* Constructs an Engine object containing an SFML Window and managers for application states 
+	* Constructs an Engine object containing a window and managers for application states 
 	*  and resources.
 	*
 	* @Parameters
@@ -56,8 +41,8 @@ public:
 	int run();
 
 private:
-	sf::RenderWindow window; /* Application window */
-	StateManager state_manager; /* Handles State creation/cleanup, transitioning between States */
-	ResourceManager resource_manager; /* Handles the loading/cleanup of application resources */
+	sf::RenderWindow window;
+	StateManager state_manager;
+	ResourceManager resource_manager;
 };
 

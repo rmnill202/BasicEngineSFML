@@ -1,14 +1,7 @@
 #include "ResourceManager.h"
 #include "Utilities.h"
 
-ResourceManager::ResourceManager() {
-	try {
-		primary_font.loadFromFile("Orkney-Regular.otf");
-	}
-	catch (std::exception& e) {
-		//std::cout << e.what() << std::endl;
-	}
-}
+ResourceManager::ResourceManager() {}
 
 ResourceManager::~ResourceManager() {
 	this->cleanup();
@@ -60,6 +53,25 @@ sf::SoundBuffer * ResourceManager::loadSoundBuffer(std::string file) {
 	}
 }
 
+sf::Font * ResourceManager::loadFont(std::string file)
+{
+	std::map<std::string, sf::Font*>::iterator found = map_fonts.find(file);
+
+	if (found != map_fonts.end()) { /* File already loaded in */
+		return found->second;
+	}
+	else {  /* Attempt to load file in */
+		sf::Font* font = new sf::Font();
+
+		if (!font->loadFromFile(file)) {
+			/* Texture doesn't exist */
+			return nullptr;
+		}
+		/* If the file has been successfully loaded */
+		map_fonts.insert(std::pair<std::string, sf::Font*>(file, font));
+	}
+}
+
 void ResourceManager::deleteTexture(std::string file) {
 	std::map<std::string, sf::Texture*>::iterator found = map_textures.find(file);
 
@@ -82,6 +94,15 @@ void ResourceManager::deleteSoundBuffer(std::string file) {
 	}
 }
 
+void ResourceManager::deleteFont(std::string file) {
+	std::map<std::string, sf::Font*>::iterator found = map_fonts.find(file);
+
+	if (found != map_fonts.end()) { /* The sound is found */
+		delete found->second;
+		map_fonts.erase(file);
+	}
+}
+
 void ResourceManager::cleanup() {
 	/* Cleanup textures */
 	for (std::map<std::string, sf::Texture*>::iterator itr = map_textures.begin(); itr != map_textures.end(); itr++) {
@@ -92,5 +113,10 @@ void ResourceManager::cleanup() {
 	for (std::map<std::string, sf::SoundBuffer*>::iterator itr = map_sound_buffer.begin(); itr != map_sound_buffer.end(); itr++) {
 		delete itr->second;
 		map_sound_buffer.erase(itr);
+	}
+	/* Cleanup fonts */
+	for (std::map<std::string, sf::Font*>::iterator itr = map_fonts.begin(); itr != map_fonts.end(); itr++) {
+		delete itr->second;
+		map_fonts.erase(itr);
 	}
 }

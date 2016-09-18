@@ -12,19 +12,18 @@ StateManager::StateManager(sf::RenderWindow * window, ResourceManager* resource_
 }
 
 StateManager::~StateManager() {
-	while (!states.empty()) {
-		states.back()->cleanup();
-		delete states.back();
-		states.pop_back();
-	}
-
-	states.clear(); /* Clear up the vector */
-	std::vector<State*>().swap(states); /* Deallocate memory by swapping vector with empty vector */
+	this->freeStates();
+	window = nullptr;
+	resource_manager = nullptr;
 }
 
 void StateManager::pushState(State * state) {
-	state->init(this, this->resource_manager);
-	states.push_back(state);
+	if (!this->isEmpty())
+		states.back()->pause(); /* The top state is paused */
+
+	state->init(this, this->resource_manager); 
+	states.push_back(state); 
+	states.back()->start(); /* The new state is started */
 }
 
 void StateManager::popState() {
@@ -33,20 +32,18 @@ void StateManager::popState() {
 		delete states.back();
 		states.pop_back();
 	}
-	else
-		std::cout << "Already empty!" << std::endl;
 }
 
 State * StateManager::topState() {
 	return states.back();
 }
 
-bool StateManager::empty() {
+bool StateManager::isEmpty() {
 	return states.empty();
 }
 
-void StateManager::freeStates() { /* Used for memory allocation testing, will be phased out */
-	while (!states.empty()) {
+void StateManager::freeStates() { 
+	while (!this->isEmpty()) {
 		states.back()->cleanup();
 		delete states.back();
 		states.pop_back();

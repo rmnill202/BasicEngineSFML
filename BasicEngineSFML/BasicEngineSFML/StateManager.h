@@ -1,17 +1,7 @@
 /*
 * @Description
-* Contains and manages States in a stack of State pointers. 
-*
-* @How to Use
-* The StateManager's primary task is to handle memory allocation, which providing a
-*  convenient interface for handling the States with stack behavior. States may be
-*  pushed into the manager, popped, peeked (topState()) and emptied. States are
-*  added to the manager with the keyword "new", which calls for the manager to delete
-*  a state manually when the manager pops it.
-*
-* @What Does This Do?
-* 1. Handles memory allocation/clearing for State objects.
-* 2. Provides stack behavior for managing State objects.
+* Contains and manages States in a stack of pointers. Cleans up objects when
+*  the application ends, or when resources are deleted.
 */
 #pragma once
 #include <SFML\Window\Event.hpp>
@@ -34,9 +24,7 @@ public:
 	* Add a new State to the stack of states.
 	*
 	* @Parameters
-	*  State* state - A State declared with the "new" keyword to avoid
-	*   the object going out of scope following the end of the function
-	*   it is created in
+	*  State* state - The new top State
 	*/
 	void pushState(State* state);
 	/*
@@ -51,21 +39,24 @@ public:
 	State* topState();
 	/*
 	* @Description
-	* Empties the stack of States and clears up memory allocated by
-	*  each State.
+	* Checks if the stack of States is empty
 	*
 	* @Return
-	* Whether or not the stack has been successfully emptied.
+	* Whether or not the stack is empty.
 	*/
-	bool empty();
-	void freeStates(); /* Used for memory allocation testing */
+	bool isEmpty();
+	/*
+	* @Description
+	* Empties the stack of States and clears up memory allocated for them.
+	*/
+	void freeStates(); 
 
 	void setWindow(sf::RenderWindow* window);
 	sf::RenderWindow* getWindow();
 
 private:
-	ResourceManager* resource_manager; /* Resource manager of the Engine */
-	sf::RenderWindow* window; /* Application window */
-	std::vector<State*> states; /* Vector of States acting as a stack */
+	ResourceManager* resource_manager;
+	sf::RenderWindow* window;
+	std::vector<State*> states;
 };
 

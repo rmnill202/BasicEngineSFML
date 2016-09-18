@@ -19,13 +19,13 @@ int Engine::run() {
 
 	while (window.isOpen()) {
 		/* (1) Update game logic */
-		if (!state_manager.empty()) { 
+		if (!state_manager.isEmpty()) { 
 			state_manager.topState()->update();
 		}
 		/* (2) Handle game events */
 		sf::Event event; 
 		while (window.pollEvent(event)) {
-			if (!state_manager.empty()) { /* Handle event in top state , if it exists*/
+			if (!state_manager.isEmpty()) { /* Handle event in top state , if it exists*/
 				state_manager.topState()->handleEvent(event, &window);
 			}
 			if (event.type == sf::Event::Closed) { /* Window is closed by the user */
@@ -37,7 +37,7 @@ int Engine::run() {
 		}
 		/* (3) Render graphics */
 		window.clear(sf::Color::Black);
-		if (!state_manager.empty()) {
+		if (!state_manager.isEmpty()) {
 			window.draw(*state_manager.topState());
 		}
 		window.display();

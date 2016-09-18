@@ -7,8 +7,8 @@
 * Create children classes for application states (different menus, transitions, gameplay).
 *  The update() and draw() functions are called every frame, while handleEvent() is only
 *  called when an action by the user is registered. The start() and pause() functions are
-*  not nearly as integral to using the class, but may provide additional functionality if
-*  multiple states are being used.
+*  called whenever a State either enters the stack or another State enters the stack,
+*  accordingly.
 *
 * @What Does This Do?
 * 1. Initialize references to its manager, as well as the accompanying resource manager.
@@ -29,8 +29,6 @@ class State : public sf::Drawable {
 public:
 	virtual void init(StateManager* state_manager, ResourceManager* resource_manager) = 0;
 	virtual void cleanup() = 0;
-
-	/* Implementation unfinished */
 	virtual void start() = 0;
 	virtual void pause() = 0;
 
